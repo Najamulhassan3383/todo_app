@@ -31,7 +31,7 @@ function App() {
           </button>
         </div>
         {/* list of todos */}
-        <div className="mt-10">
+        <div className="mt-10 bg-VeryDarkGreyishBlue rounded">
           <ListItem title="Complete online JavaScript course" />
           <ListItem title="Jog around the park 3x" />
           <ListItem title="10 minutes meditation" />

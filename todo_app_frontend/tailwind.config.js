@@ -9,10 +9,13 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: hsl(220, 98, 61),
-        
-        
+        primary: "hsl(220, 98%, 61%)",
+        VeryLightGrey: "#FAFAFA",
+        VeryLightGreyishBlue: "#E4E5F1",
+        LightGreyishBlue: "#D2D3DB",
+        DarkGreyishBlue: "#9394A5",
+        VeryDarkGreyishBlue: "#484B6A",
+      },
     },
   },
-  plugins: [],
 };

@@ -1,3 +1,4 @@
+import ListItem from "./components/ListItem";
 import desktop_dark_bg from "./images/bg-desktop-dark.jpg";
 import button1 from "./images/icon-moon.svg";
 import button2 from "./images/icon-sun.svg";
@@ -31,39 +32,9 @@ function App() {
         </div>
         {/* list of todos */}
         <div className="mt-10">
-          <div className="flex justify-center items-center ">
-            <div className="w-full h-12 rounded-md pl-4 text-white bg-DarkGreyishBlue text-lg  flex justify-between items-center">
-              <div className="flex justify-start items-center">
-                <input type="checkbox" />
-                <p className="ml-4">Complete online JavaScript course</p>
-              </div>
-              <button className="text-white text-sm font-bold bg-primary rounded-md h-8 w-8 mr-10">
-                x
-              </button>
-            </div>
-          </div>
-          <div className="flex justify-center items-center ">
-            <div className="w-full h-12 rounded-md pl-4 text-VeryDarkGreyishBlue bg-DarkGreyishBlue text-lg font-bold flex justify-between items-center">
-              <div className="flex justify-start items-center">
-                <input type="checkbox" />
-                <p className="ml-4">Complete online JavaScript course</p>
-              </div>
-              <button className="text-white text-sm font-bold bg-primary rounded-md h-8 w-8 mr-10">
-                x
-              </button>
-            </div>
-          </div>
-          <div className="flex justify-center items-center">
-            <div className="w-full h-12 rounded-md pl-4 text-VeryDarkGreyishBlue bg-DarkGreyishBlue text-lg font-bold flex justify-between items-center">
-              <div className="flex justify-start items-center">
-                <input type="checkbox" />
-                <p className="ml-4">Complete online JavaScript course</p>
-              </div>
-              <button className="text-white text-sm font-bold bg-primary rounded-md h-8 w-8 mr-10">
-                x
-              </button>
-            </div>
-          </div>
+          <ListItem title="Complete online JavaScript course" />
+          <ListItem title="Jog around the park 3x" />
+          <ListItem title="10 minutes meditation" />
         </div>
       </div>
     </div>

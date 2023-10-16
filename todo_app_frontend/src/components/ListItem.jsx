@@ -4,20 +4,21 @@ import Cross from "../images/icon-cross.svg";
 
 function ListItem({ title }) {
   return (
-    <div className="flex justify-center items-center border-b border-white ">
-      <div className="w-full h-12 rounded-md pl-4 text-white  text-lg  flex justify-between items-center">
+    <div className="group flex justify-center items-center border-b border-white relative">
+      <div className="w-full h-12 rounded-md pl-4 text-DarkGreyishBlue text-lg flex justify-between items-center">
         <div className="flex justify-start items-center">
-          {/* show check icon here */}
-          {/* <img src={Check} alt="check" /> */}
-          <input
-            type="checkbox"
-            className="appearance-none w-6 h-6 border rounded-xl   focus:outline-none"
-          />
-
-          <p className="ml-4">{title}</p>
+          {/* for making a place for icon */}
+          {/* wrapper div */}
+          <div className="h-6 w-6  rounded-xl bg-VeryLightGreyishBlue flex justify-center items-center">
+            <div className="h-6 w-6  rounded-xl bg-button-background flex justify-center items-center hidden group-hover:flex">
+              {/* <div className="h-4/5 w-4/5 rounded-xl bg-white  "></div> */}
+              <img src={Check} alt="check" className="h-h-3/5 w-3/5" />
+            </div>
+          </div>
+          <p className="ml-4 pr-8 ">{title}</p>
         </div>
-        <button className="text-white text-sm font-bold bg-primary rounded-md h-8 w-8 mr-10">
-          x
+        <button className="hidden rounded-md h-4 w-4 mr-10  group-hover:block">
+          <img src={Cross} alt="cross" className="h-full w-full" />
         </button>
       </div>
     </div>

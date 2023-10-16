@@ -16,6 +16,10 @@ export default {
         DarkGreyishBlue: "#9394A5",
         VeryDarkGreyishBlue: "#484B6A",
       },
+      backgroundImage: {
+        "button-background":
+          "linear-gradient(192deg, hsl(192, 100%, 67%), hsl(280, 87%, 65%))",
+      },
     },
   },
 };

@@ -1,10 +1,11 @@
-import React, { createContext, useContext, useState } from "react";
+import { createContext, useState } from "react";
+import PropTypes from "prop-types";
 
 const AppStateContext = createContext();
 
 // data for the todo app
 
-const data = [
+const dataArray = [
   {
     id: 1,
     title: "Learn React",
@@ -56,8 +57,8 @@ const data = [
   },
 ];
 
-export const AppStateProvider = ({ children }) => {
-  const [data, setData] = useState(data);
+const AppStateProvider = ({ children }) => {
+  const [data, setData] = useState(dataArray);
   const [theme, setTheme] = useState("light");
 
   const ToggleTheme = () => {
@@ -93,7 +94,8 @@ export const AppStateProvider = ({ children }) => {
     </AppStateContext.Provider>
   );
 };
-
-export const useAppState = () => {
-  return useContext(AppStateContext);
+AppStateContext.PropTypes = {
+  children: PropTypes.object,
 };
+
+export { AppStateContext, AppStateProvider };

@@ -10,7 +10,7 @@ const dataArray = [
     id: 1,
     title: "Learn React",
 
-    completed: false,
+    completed: true,
   },
   {
     id: 2,
@@ -80,9 +80,12 @@ const AppStateProvider = ({ children }) => {
 
   const ToggleTodo = (id) => {
     setData(
-      data.map((todo) =>
-        todo.id === id ? { ...todo, completed: !todo.completed } : todo
-      )
+      data.map((todo) => {
+        if (todo.id === id) {
+          return { ...todo, completed: !todo.completed };
+        }
+        return todo;
+      })
     );
   };
 

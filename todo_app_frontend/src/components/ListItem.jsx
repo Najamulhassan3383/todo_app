@@ -3,11 +3,21 @@ import Check from "../images/icon-check.svg";
 import Cross from "../images/icon-cross.svg";
 import { useContext } from "react";
 import { AppStateContext } from "./Context";
+import { useDrag } from "react-dnd";
 
 function ListItem({ item }) {
+  const [{ isDragging }, drag] = useDrag(() => ({
+    type: "list-item",
+    collect: (monitor) => ({
+      isDragging: !!monitor.isDragging(),
+    }),
+  }));
   const { DeleteTodo, AddTodo, ToggleTodo } = useContext(AppStateContext);
   return (
-    <div className="group flex justify-center items-center border-b border-white relative">
+    <div
+      ref={(node) => drag(node)}
+      className="group flex justify-center items-center border-b border-white relative"
+    >
       <div className="w-full h-12 rounded-md pl-4 text-DarkGreyishBlue text-lg flex justify-between items-center">
         <div className="flex justify-start items-center">
           {/* for making a place for icon */}

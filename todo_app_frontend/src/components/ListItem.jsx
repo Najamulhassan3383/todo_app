@@ -1,22 +1,62 @@
 import PropTypes from "prop-types";
 import Check from "../images/icon-check.svg";
 import Cross from "../images/icon-cross.svg";
-import { useContext } from "react";
+import { useContext, useRef } from "react";
 import { AppStateContext } from "./Context";
-import { useDrag } from "react-dnd";
+import { useDrag, useDrop } from "react-dnd";
 
 function ListItem({ item, index }) {
-  const [{ isDragging }, drag] = useDrag(() => ({
-    type: "TODO",
-    item: { id: item.id, index },
-    collect: (monitor) => ({
-      isDragging: !!monitor.isDragging(),
-    }),
+  const ref = useRef(null);
+  const { DeleteTodo, AddTodo, ToggleTodo, MoveTodo } =
+    useContext(AppStateContext);
+
+  const [, drop] = useDrop(() => ({
+    accept: "TODO",
+    hover(item, monitor) {
+      console.log(item, "item");
+      console.log(monitor.getItem());
+      if (!ref.current) {
+        return;
+      }
+      const dragIndex = item.index;
+      const hoverIndex = index;
+      // console.log(item);
+      if (dragIndex === hoverIndex) {
+        return;
+      }
+
+      const hoverBoundingRect = ref.current?.getBoundingClientRect();
+      const hoverMiddleY =
+        (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+
+      const clientOffset = monitor.getClientOffset();
+      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+      if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+        return;
+      }
+
+      if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+        return;
+      }
+      MoveTodo(dragIndex, hoverIndex);
+    },
   }));
-  const { DeleteTodo, AddTodo, ToggleTodo } = useContext(AppStateContext);
+
+  const [{ isDragging }, drag] = useDrag({
+    type: "TODO",
+    item: { id: item.id, index: index },
+    collect: (monitor) => {
+      return {
+        isDragging: monitor.isDragging(),
+      };
+    },
+  });
+
+  drag(drop(ref));
+
   return (
     <div
-      ref={(node) => drag(node)}
+      ref={ref}
       className="group flex justify-center items-center border-b border-white relative"
     >
       <div className="w-full h-12 rounded-md pl-4 text-DarkGreyishBlue text-lg flex justify-between items-center">

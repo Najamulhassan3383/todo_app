@@ -78,6 +78,13 @@ const AppStateProvider = ({ children }) => {
     setData(data.filter((todo) => todo.id !== id));
   };
 
+  const MoveTodo = (id, index) => {
+    const dragTodo = data.find((todo) => todo.id === id);
+    const filtered = data.filter((todo) => todo.id !== id);
+    filtered.splice(index, 0, dragTodo);
+    setData(filtered);
+  };
+
   const ToggleTodo = (id) => {
     setData(
       data.map((todo) => {
@@ -91,7 +98,15 @@ const AppStateProvider = ({ children }) => {
 
   return (
     <AppStateContext.Provider
-      value={{ data, ToggleTheme, AddTodo, DeleteTodo, ToggleTodo }}
+      value={{
+        data,
+        setData,
+        ToggleTheme,
+        AddTodo,
+        DeleteTodo,
+        ToggleTodo,
+        MoveTodo,
+      }}
     >
       {children}
     </AppStateContext.Provider>

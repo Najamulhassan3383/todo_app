@@ -5,9 +5,10 @@ import { useContext } from "react";
 import { AppStateContext } from "./Context";
 import { useDrag } from "react-dnd";
 
-function ListItem({ item }) {
+function ListItem({ item, index }) {
   const [{ isDragging }, drag] = useDrag(() => ({
-    type: "list-item",
+    type: "TODO",
+    item: { id: item.id, index },
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
     }),
@@ -58,4 +59,5 @@ export default ListItem;
 
 ListItem.propTypes = {
   item: PropTypes.object,
+  index: PropTypes.number,
 };

@@ -1,0 +1,38 @@
+[
+  {
+    "completed": true,
+    "title": "Learn React"
+  },
+  {
+    "completed": false,
+    "title": "Learn Tailwind"
+  },
+  {
+    "completed": false,
+    "title": "Learn Next.js"
+  },
+  {
+    "completed": false,
+    "title": "Learn React Native"
+  },
+  {
+    "completed": false,
+    "title": "Complete homework"
+  },
+  {
+    "completed": true,
+    "title": "Read a book"
+  },
+  {
+    "completed": false,
+    "title": "Go for a run"
+  },
+  {
+    "completed": true,
+    "title": "Write a blog post"
+  },
+  {
+    "completed": true,
+    "title": "Prepare for presentation"
+  }
+]

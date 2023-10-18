@@ -6,10 +6,12 @@ import { AppStateContext } from "./components/Context";
 import { useContext } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import axios from "axios";
+import Loader from "./components/Loader";
 
 function App() {
   const { data, setData, baseUrl } = useContext(AppStateContext);
   // console.log(data);
+  
 
   useEffect(() => {
     axios.get(baseUrl).then((response) => {
@@ -32,8 +34,11 @@ function App() {
       <div className="absolute top-0 left-0 right-0 z-0 h-2/5 w-full">
         <img src={desktop_dark_bg} alt="background" />
       </div>
+
       <div className="w-2/4 h-full bg-black z-10 bg-transparent mt-10">
         <Hero />
+
+        <Loader />
 
         <DragDropContext onDragEnd={onDragEnd}>
           <Droppable droppableId="droppable">

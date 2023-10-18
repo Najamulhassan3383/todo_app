@@ -7,51 +7,51 @@ const AppStateContext = createContext();
 
 const dataArray = [
   {
-    id: 1,
+    id: "1",
     title: "Learn React",
 
     completed: true,
   },
   {
-    id: 2,
+    id: "2",
     title: "Learn Tailwind",
 
     completed: false,
   },
   {
-    id: 3,
+    id: "3",
     title: "Learn Next.js",
 
     completed: false,
   },
   {
-    id: 4,
+    id: "4",
     title: "Learn React Native",
 
     completed: false,
   },
   {
-    id: 5,
+    id: "5",
     title: "Complete homework",
     completed: false,
   },
   {
-    id: 6,
+    id: "6",
     title: "Read a book",
     completed: true,
   },
   {
-    id: 7,
+    id: "7",
     title: "Go for a run",
     completed: false,
   },
   {
-    id: 8,
+    id: "8",
     title: "Write a blog post",
     completed: true,
   },
   {
-    id: 9,
+    id: "9",
     title: "Prepare for presentation",
     completed: true,
   },

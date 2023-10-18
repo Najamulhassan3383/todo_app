@@ -26,7 +26,7 @@ function ListItem({ item }) {
                 <img src={Check} alt="check" className="h-3/5 w-3/5" />
               </div>
             ) : (
-              <div className="h-6 w-6  rounded-xl bg-button-background flex justify-center items-center hidden group-hover:flex">
+              <div className="h-6 w-6  rounded-xl bg-button-background flex justify-center items-center hidden group-hover:flex ">
                 <div className="h-4/5 w-4/5 rounded-xl bg-white"></div>
               </div>
             )}
@@ -40,7 +40,14 @@ function ListItem({ item }) {
             DeleteTodo(item.id);
           }}
         >
-          <img src={Cross} alt="cross" className="h-full w-full" />
+          <img
+            src={Cross}
+            alt="cross"
+            className="h-full w-full"
+            onClick={() => {
+              DeleteTodo(item.id);
+            }}
+          />
         </button>
       </div>
     </div>

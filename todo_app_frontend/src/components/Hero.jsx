@@ -1,8 +1,23 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import button1 from "../images/icon-sun.svg";
 import button2 from "../images/icon-sun.svg";
+import { AppStateContext } from "./Context";
 
 export default function Hero() {
+  const { AddTodo } = useContext(AppStateContext);
+  const [task, setTask] = useState("");
+  const handleChange = (e) => {
+    let newtask = e.target.value.trim();
+    setTask(newtask);
+  };
+  const handleAdd = () => {
+    if (task) {
+      AddTodo(task);
+      setTask("");
+    } else {
+      alert("Enter a valid task");
+    }
+  };
   return (
     <>
       <div className="flex justify-between items-center p-4">
@@ -18,9 +33,16 @@ export default function Hero() {
           className="w-full h-12 rounded-md pl-4 text-VeryDarkGreyishBlue text-lg font-bold"
           type="text"
           placeholder="Create a new todo..."
+          value={task}
+          onChange={handleChange}
         />
         {/* button for adding */}
-        <button className="text-white text-sm font-bold bg-primary rounded-md h-12 w-12 ml-4">
+        <button
+          className="text-white text-sm font-bold bg-primary rounded-md h-12 w-12 ml-4"
+          onClick={() => {
+            handleAdd();
+          }}
+        >
           +
         </button>
       </div>

@@ -2,10 +2,12 @@ import React, { useContext, useState } from "react";
 import button1 from "../images/icon-sun.svg";
 import button2 from "../images/icon-sun.svg";
 import { AppStateContext } from "./Context";
+import Error from "./Error";
 
 export default function Hero() {
   const { AddTodo } = useContext(AppStateContext);
   const [task, setTask] = useState("");
+  const [error, setError] = useState(false);
   const handleChange = (e) => {
     let newtask = e.target.value.trim();
     setTask(newtask);
@@ -15,11 +17,21 @@ export default function Hero() {
       AddTodo(task);
       setTask("");
     } else {
-      alert("Enter a valid task");
+      setError(true);
+      setTimeout(() => {
+        setError(false);
+      }, 500);
     }
   };
   return (
     <>
+      {error && (
+        <Error
+          error={"please enter a task"}
+          state={Error}
+          seterror={setError}
+        />
+      )}
       <div className="flex justify-between items-center p-4">
         <h1 className="text-white text-3xl font-bold">TODO</h1>
         <button className="text-white text-sm font-bold">

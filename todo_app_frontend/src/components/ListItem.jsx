@@ -3,12 +3,10 @@ import Check from "../images/icon-check.svg";
 import Cross from "../images/icon-cross.svg";
 import { useContext } from "react";
 import { AppStateContext } from "./Context";
-import { Draggable } from "react-beautiful-dnd";
 
 function ListItem({ item }) {
-  const { DeleteTodo, AddTodo, ToggleTodo, MoveTodo } =
-    useContext(AppStateContext);
-
+  const { DeleteTodo, ToggleTodo } = useContext(AppStateContext);
+  console.log(item);
   return (
     <div className="group flex justify-center items-center border-b border-white relative">
       <div className="w-full h-12 rounded-md pl-4 text-DarkGreyishBlue text-lg flex justify-between items-center">
@@ -18,10 +16,10 @@ function ListItem({ item }) {
           <div
             className="h-6 w-6  rounded-xl bg-transparent flex justify-center items-center "
             onClick={() => {
-              ToggleTodo(item.id);
+              ToggleTodo(item._id);
             }}
           >
-            {item.completed ? (
+            {item.isCompleted ? (
               <div className="h-6 w-6  rounded-xl bg-button-background flex justify-center items-center  ">
                 <img src={Check} alt="check" className="h-3/5 w-3/5" />
               </div>
@@ -37,7 +35,7 @@ function ListItem({ item }) {
         <button
           className="hidden rounded-md h-4 w-4 mr-10  group-hover:block"
           onClick={() => {
-            DeleteTodo(item.id);
+            DeleteTodo(item._id);
           }}
         >
           <img
@@ -45,7 +43,7 @@ function ListItem({ item }) {
             alt="cross"
             className="h-full w-full"
             onClick={() => {
-              DeleteTodo(item.id);
+              DeleteTodo(item._id);
             }}
           />
         </button>

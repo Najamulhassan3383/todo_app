@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import ListItem from "./components/ListItem";
 import desktop_dark_bg from "./images/bg-desktop-dark.jpg";
 import Hero from "./components/Hero";
@@ -11,11 +11,14 @@ import Loader from "./components/Loader";
 function App() {
   const { data, setData, baseUrl } = useContext(AppStateContext);
   // console.log(data);
-  
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     axios.get(baseUrl).then((response) => {
-      console.log(response.data.data);
+      setData(response.data.data);
+
+      setLoading(false);
     });
   }, []);
 
@@ -37,39 +40,40 @@ function App() {
 
       <div className="w-2/4 h-full bg-black z-10 bg-transparent mt-10">
         <Hero />
-
-        <Loader />
-
-        <DragDropContext onDragEnd={onDragEnd}>
-          <Droppable droppableId="droppable">
-            {(provided, snapshot) => (
-              <div
-                className="mt-10 bg-VeryLightGrey  rounded"
-                {...provided.droppableProps}
-                ref={provided.innerRef}
-              >
-                {data.map((item, index) => (
-                  <Draggable
-                    key={item.id}
-                    draggableId={item.id.toString()}
-                    index={index}
-                  >
-                    {(provided, snapshot) => (
-                      <div
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                      >
-                        <ListItem item={item} />
-                      </div>
-                    )}
-                  </Draggable>
-                ))}
-                {provided.placeholder}
-              </div>
-            )}
-          </Droppable>
-        </DragDropContext>
+        {loading ? (
+          <Loader />
+        ) : (
+          <DragDropContext onDragEnd={onDragEnd}>
+            <Droppable droppableId="droppable">
+              {(provided, snapshot) => (
+                <div
+                  className="mt-10 bg-VeryLightGrey  rounded"
+                  {...provided.droppableProps}
+                  ref={provided.innerRef}
+                >
+                  {data.map((item, index) => (
+                    <Draggable
+                      key={item._id}
+                      draggableId={item._id}
+                      index={index}
+                    >
+                      {(provided, snapshot) => (
+                        <div
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                        >
+                          <ListItem item={item} />
+                        </div>
+                      )}
+                    </Draggable>
+                  ))}
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+          </DragDropContext>
+        )}
       </div>
     </div>
   );

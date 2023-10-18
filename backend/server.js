@@ -3,9 +3,11 @@ const dotenv = require("dotenv");
 const app = express();
 const connectDB = require("./config/Db");
 const Todo = require("./routes/Todo");
+var cors = require("cors");
 
 // Load env vars
 dotenv.config({ path: "./config/config.env" });
+app.use(cors());
 connectDB();
 
 app.use(express.json());

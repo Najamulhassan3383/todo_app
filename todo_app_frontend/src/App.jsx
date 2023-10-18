@@ -1,13 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ListItem from "./components/ListItem";
 import desktop_dark_bg from "./images/bg-desktop-dark.jpg";
 import Hero from "./components/Hero";
 import { AppStateContext } from "./components/Context";
 import { useContext } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import axios from "axios";
 
 function App() {
-  const { data, setData } = useContext(AppStateContext);
+  const { data, setData, baseUrl } = useContext(AppStateContext);
+  // console.log(data);
+
+  useEffect(() => {
+    axios.get(baseUrl).then((response) => {
+      console.log(response.data.data);
+    });
+  }, []);
+
   function onDragEnd(result) {
     if (!result.destination) {
       return;

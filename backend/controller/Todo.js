@@ -40,6 +40,40 @@ class Todo {
 
     // next();
   }
+
+  updateTodo(req, res, next) {
+    const id = req.params.id;
+
+    todoSc
+      .findByIdAndUpdate(id, req.body, {
+        new: true,
+        runValidators: true,
+      })
+      .then((result) => {
+        if (!result) {
+          return res.status(404).json({ success: false, msg: "No todo found" });
+        }
+        res.status(200).json({ success: true, data: result });
+      })
+      .catch((err) => {
+        res.status(400).json({ success: false, msg: err });
+      });
+  }
+
+  deleteTodo(req, res, next) {
+    const id = req.params.id;
+    todoSc
+      .findByIdAndDelete(id)
+      .then((result) => {
+        if (!result) {
+          return res.status(404).json({ success: false, msg: "No todo found" });
+        }
+        res.status(200).json({ success: true, data: result });
+      })
+      .catch((err) => {
+        res.status(400).json({ success: false, msg: err });
+      });
+  }
 }
 
 module.exports = Todo;

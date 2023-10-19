@@ -7,43 +7,41 @@ import { useContext } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import axios from "axios";
 import Loader from "./components/Loader";
+import { Outlet } from "react-router-dom";
 import SignIn from "./components/SignIn";
 import SignUpForm from "./components/SignUpForm";
 
 function App() {
-  // const { data, setData, baseUrl } = useContext(AppStateContext);
-  // // console.log(data);
-  // const [loading, setLoading] = useState(true);
+  const { data, setData, baseUrl } = useContext(AppStateContext);
+  // console.log(data);
+  const [loading, setLoading] = useState(true);
   // const [error, setError] = useState(false);
 
-  // useEffect(() => {
-  //   axios.get(baseUrl).then((response) => {
-  //     setData(response.data.data);
+  useEffect(() => {
+    axios.get(baseUrl).then((response) => {
+      setData(response.data.data);
 
-  //     setLoading(false);
-  //   });
-  // }, []);
+      setLoading(false);
+    });
+  }, []);
 
-  // function onDragEnd(result) {
-  //   if (!result.destination) {
-  //     return;
-  //   }
-  //   const newItems = [...data];
-  //   const [removed] = newItems.splice(result.source.index, 1);
-  //   newItems.splice(result.destination.index, 0, removed);
-  //   setData(newItems);
-  // }
+  function onDragEnd(result) {
+    if (!result.destination) {
+      return;
+    }
+    const newItems = [...data];
+    const [removed] = newItems.splice(result.source.index, 1);
+    newItems.splice(result.destination.index, 0, removed);
+    setData(newItems);
+  }
 
   return (
-    // <div className="bg-white h-screen w-screen flex justify-center items-center bg-VeryLightGrey ">
-    //   <div className="absolute top-0 left-0 right-0 z-0 h-2/5 w-full">
-    //     <img src={desktop_dark_bg} alt="background" />
-    //   </div>
-    <>
-      <SignIn />
-      <SignUpForm />
-    </>
-    /* <div className="w-2/4 h-full bg-black z-10 bg-transparent mt-10">
+    <div className="bg-white h-screen w-screen flex justify-center items-center bg-VeryLightGrey ">
+      <div className="absolute top-0 left-0 right-0 z-0 h-2/5 w-full">
+        <img src={desktop_dark_bg} alt="background" />
+      </div>
+
+      <div className="w-2/4 h-full bg-black z-10 bg-transparent mt-10">
         <Hero />
         {loading ? (
           <Loader />
@@ -78,9 +76,9 @@ function App() {
               )}
             </Droppable>
           </DragDropContext>
-        )} */
-    /* </div> */
-    // </div>
+        )}
+      </div>
+    </div>
   );
 }
 

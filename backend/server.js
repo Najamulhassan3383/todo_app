@@ -1,17 +1,24 @@
 const express = require("express");
 const dotenv = require("dotenv");
-const app = express();
+const { notFound, errorHandler } = require("./Middleware/errorMiddleware");
+
 const connectDB = require("./config/Db");
 const Todo = require("./routes/Todo");
 var cors = require("cors");
+const authUser = require("./routes/UserRoutes");
 
+const app = express();
 // Load env vars
 dotenv.config({ path: "./config/config.env" });
 app.use(cors());
 connectDB();
 
 app.use(express.json());
-app.use("/", Todo);
+app.use("/api/todos", Todo);
+app.use("/api/users", authUser);
+
+app.use(notFound);
+app.use(errorHandler);
 
 app.listen(3000, () => {
   console.log("Server is listening on port 3000");

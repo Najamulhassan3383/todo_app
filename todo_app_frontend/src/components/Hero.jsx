@@ -32,7 +32,7 @@ export default function Hero() {
           seterror={setError}
         />
       )}
-      <div className="flex justify-between items-center p-4">
+      <div className="flex justify-center items-center p-4">
         <h1 className="text-white text-3xl font-bold">TODO</h1>
         <button className="text-white text-sm font-bold">
           <img src={button1} alt="button1" />{" "}

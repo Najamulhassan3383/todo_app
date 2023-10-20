@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 
 const SignUpForm = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const handleSignUp = () => {};
   return (
     <div className="bg-white p-4 max-w-sm rounded-md shadow-md">
       <p className="text-xl font-semibold text-center text-gray-800 mb-4">
@@ -12,6 +16,8 @@ const SignUpForm = () => {
           className="border rounded-md w-full py-2 px-3 focus:outline-none focus:border-blue-500"
           type="text"
           placeholder="Enter your name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
         />
       </div>
       <div className="mb-4 relative">
@@ -19,6 +25,8 @@ const SignUpForm = () => {
           className="border rounded-md w-full py-2 px-3 focus:outline-none focus:border-blue-500"
           type="email"
           placeholder="Enter email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
       </div>
       <div className="mb-4 relative">
@@ -26,9 +34,14 @@ const SignUpForm = () => {
           className="border rounded-md w-full py-2 px-3 focus:outline-none focus:border-blue-500"
           type="password"
           placeholder="Enter password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
         />
       </div>
-      <button className="bg-purple-600 text-white rounded-md py-2 px-4 w-full transition duration-300 ease-in-out hover:bg-purple-700">
+      <button
+        className="bg-purple-600 text-white rounded-md py-2 px-4 w-full transition duration-300 ease-in-out hover:bg-purple-700"
+        onClick={handleSignUp}
+      >
         Sign up
       </button>
       <div className="text-gray-600 text-sm text-center mt-2">

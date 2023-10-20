@@ -7,6 +7,7 @@ const AppStateProvider = ({ children }) => {
   const [data, setData] = useState([]);
   const [theme, setTheme] = useState("light");
   const baseUrl = "http://localhost:3000";
+  const [login, setLogin] = useState(false);
 
   const ToggleTheme = () => {
     setTheme(theme === "light" ? "dark" : "light");
@@ -54,6 +55,8 @@ const AppStateProvider = ({ children }) => {
         ToggleTodo,
         MoveTodo,
         baseUrl,
+        login,
+        setLogin,
       }}
     >
       {children}

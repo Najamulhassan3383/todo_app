@@ -9,8 +9,21 @@ function SignIn() {
   const { baseUrl, login, setLogin } = useContext(AppStateContext);
 
   const hanldeSubmit = () => {
-    let url = baseUrl + "/users/";
-    
+    console.log("hello from sign in");
+    let url = baseUrl + "/api/users/auth";
+    console.log(email, password);
+    axios.post(url, { email, password }).then((response) => {
+      if (!response.message) {
+        setLogin(true);
+        setEmail("");
+        setPassword("");
+
+        const cookies = response.headers["set-cookie"];
+        document.cookie = cookies;
+      } else {
+        alert("Invalid email or password");
+      }
+    });
   };
 
   return (

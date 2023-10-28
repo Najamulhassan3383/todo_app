@@ -3,26 +3,41 @@ import button1 from "../images/icon-sun.svg";
 import button2 from "../images/icon-sun.svg";
 import { AppStateContext } from "./Context";
 import Error from "./Error";
+import axios from "axios";
 
 export default function Hero() {
-  const { AddTodo } = useContext(AppStateContext);
+  const { AddTodo, data, setData } = useContext(AppStateContext);
   const [task, setTask] = useState("");
   const [error, setError] = useState(false);
   const handleChange = (e) => {
-    let newtask = e.target.value.trim();
+    let newtask = e.target.value;
+
     setTask(newtask);
   };
-  const handleAdd = () => {
-    if (task) {
-      AddTodo(task);
-      setTask("");
-    } else {
+
+  // make a post request to the backend to add a new todo
+  const handleAdd = async () => {
+    if (task === "") {
       setError(true);
-      setTimeout(() => {
-        setError(false);
-      }, 500);
+    } else {
+      setError(false);
+      const newTodo = {
+        title: task,
+        isCompleted: false,
+      };
+      const response = await axios.post(
+        "http://localhost:3000/api/todos",
+        newTodo,
+        {
+          withCredentials: true,
+        }
+      );
+      setData([...data, response.data.data]);
+      console.log(response);
+      setTask("");
     }
   };
+
   return (
     <>
       {error && (
@@ -32,11 +47,20 @@ export default function Hero() {
           seterror={setError}
         />
       )}
-      <div className="flex justify-center items-center p-4">
+      <div className="flex flex-row  justify-between items-center p-4">
         <h1 className="text-white text-3xl font-bold">TODO</h1>
         <button className="text-white text-sm font-bold">
           <img src={button1} alt="button1" />{" "}
           {/* Provide the correct source for the image */}
+        </button>
+        {/* logout button */}
+        <button
+          className="text-white text-sm font-bold"
+          onClick={() => {
+            // Logout();
+          }}
+        >
+          Log out
         </button>
       </div>
 

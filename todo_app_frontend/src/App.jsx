@@ -24,12 +24,9 @@ function App() {
 
   useEffect(() => {
     const verifyCookie = async () => {
-      if (!cookies.token) {
-        navigate("/app");
-      }
       const response = await axios.get(
-        "http://localhost:3000",
-        {},
+        "http://localhost:3000/api/todos",
+
         { withCredentials: true }
       );
       console.log(response);
@@ -44,7 +41,7 @@ function App() {
         : (removeCookie("token"), navigate("/"));
     };
     verifyCookie();
-  }, [cookies, navigate, removeCookie]);
+  }, [cookies, navigate, removeCookie, setData]);
   const Logout = () => {
     removeCookie("token");
     navigate("/signup");

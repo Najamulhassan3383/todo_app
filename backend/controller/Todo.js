@@ -2,9 +2,9 @@ const todoSc = require("../models/Todo");
 
 class Todo {
   getTodos(req, res, next) {
-    //get all the todos from the database
+    console.log(req.user);
     todoSc
-      .find()
+      .find({ user: req.user._id.valueOf() })
       .then((todos) => {
         if (!todos) {
           return res
@@ -21,9 +21,11 @@ class Todo {
 
   postTodos(req, res, next) {
     //create a new todo
+    console.log(req.user);
     const todo = new todoSc({
       title: req.body.title,
       completed: req.body.completed,
+      user: req.user._id,
     });
     console.log(todo);
     todoSc
@@ -45,7 +47,7 @@ class Todo {
     const id = req.params.id;
 
     todoSc
-      .findByIdAndUpdate(id, req.body, {
+      .findByIdAndUpdate({ _id: id, user: req.user._id.valueOf() }, req.body, {
         new: true,
         runValidators: true,
       })
@@ -63,7 +65,7 @@ class Todo {
   deleteTodo(req, res, next) {
     const id = req.params.id;
     todoSc
-      .findByIdAndDelete(id)
+      .findByIdAndDelete({ _id: id, user: req.user._id.valueOf() })
       .then((result) => {
         if (!result) {
           return res.status(404).json({ success: false, msg: "No todo found" });

@@ -23,7 +23,7 @@ connectDB();
 app.use(express.json({ type: "application/json" }));
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/", Todo);
+app.use("/api/todos", Todo);
 app.use("/api/users", authUser);
 
 app.use(notFound);

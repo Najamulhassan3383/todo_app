@@ -6,7 +6,7 @@ import { AppStateContext } from "./Context";
 
 function ListItem({ item }) {
   const { DeleteTodo, ToggleTodo } = useContext(AppStateContext);
-  console.log(item);
+  // console.log(item); 
   return (
     <div className="group flex justify-center items-center border-b border-white relative">
       <div className="w-full h-12 rounded-md pl-4 text-DarkGreyishBlue text-lg flex justify-between items-center">

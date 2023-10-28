@@ -4,9 +4,11 @@ import button2 from "../images/icon-sun.svg";
 import { AppStateContext } from "./Context";
 import Error from "./Error";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function Hero() {
   const { AddTodo, data, setData } = useContext(AppStateContext);
+  const navigate = useNavigate();
   const [task, setTask] = useState("");
   const [error, setError] = useState(false);
   const handleChange = (e) => {
@@ -38,6 +40,15 @@ export default function Hero() {
     }
   };
 
+  const handleLogout = async () => {
+    const response = await axios.post("http://localhost:3000/api/auth/logout", {
+      withCredentials: true,
+    });
+    console.log(response);
+    setData([]);
+    navigate("/");
+  };
+
   return (
     <>
       {error && (
@@ -57,7 +68,8 @@ export default function Hero() {
         <button
           className="text-white text-sm font-bold"
           onClick={() => {
-            // Logout();
+            handleLogout();
+            navigate("/");
           }}
         >
           Log out

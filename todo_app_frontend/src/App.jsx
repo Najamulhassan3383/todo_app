@@ -24,12 +24,13 @@ function App() {
 
   useEffect(() => {
     const verifyCookie = async () => {
+      console.log(cookies);
       const response = await axios.get(
         "http://localhost:3000/api/todos",
 
         { withCredentials: true }
       );
-      console.log(response);
+      // console.log(response);
       setData(response.data.data);
 
       setLoading(false);
@@ -42,10 +43,6 @@ function App() {
     };
     verifyCookie();
   }, [cookies, navigate, removeCookie, setData]);
-  const Logout = () => {
-    removeCookie("token");
-    navigate("/signup");
-  };
 
   function onDragEnd(result) {
     if (!result.destination) {

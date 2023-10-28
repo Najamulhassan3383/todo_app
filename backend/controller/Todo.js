@@ -2,7 +2,7 @@ const todoSc = require("../models/Todo");
 
 class Todo {
   getTodos(req, res, next) {
-    console.log(req.user);
+    console.log(req.user.name);
     todoSc
       .find({ user: req.user._id.valueOf() })
       .then((todos) => {

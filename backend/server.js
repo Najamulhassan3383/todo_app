@@ -11,13 +11,19 @@ const cookieParser = require("cookie-parser");
 const app = express();
 // Load env vars
 dotenv.config({ path: "./config/config.env" });
-app.use(cors());
+
+const corsConfig = {
+  credentials: true,
+  origin: true,
+};
+app.use(cors(corsConfig));
 app.use(cookieParser());
 connectDB();
 
-app.use(express.json());
+app.use(express.json({ type: "application/json" }));
 app.use(express.urlencoded({ extended: true }));
-app.use("/api/todos", Todo);
+
+app.use("/", Todo);
 app.use("/api/users", authUser);
 
 app.use(notFound);

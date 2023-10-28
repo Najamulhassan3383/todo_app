@@ -7,24 +7,48 @@ import { useContext } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import axios from "axios";
 import Loader from "./components/Loader";
-import { Navigate, Outlet } from "react-router-dom";
-import SignIn from "./components/SignIn";
-import SignUpForm from "./components/SignUpForm";
+import { useNavigate } from "react-router-dom";
+
+import { ToastContainer, toast } from "react-toastify";
+import { useCookies } from "react-cookie";
 
 function App() {
   const { data, setData, baseUrl, login } = useContext(AppStateContext);
   // console.log(data);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+  const [cookies, removeCookie] = useCookies([]);
+  const [username, setUsername] = useState("");
 
   // const [error, setError] = useState(false);
 
   useEffect(() => {
-    axios.get(`${baseUrl}/api/todos`).then((response) => {
+    const verifyCookie = async () => {
+      if (!cookies.token) {
+        navigate("/app");
+      }
+      const response = await axios.get(
+        "http://localhost:3000",
+        {},
+        { withCredentials: true }
+      );
+      console.log(response);
       setData(response.data.data);
 
       setLoading(false);
-    });
-  }, []);
+      setUsername("najm");
+      return response.data
+        ? toast(`Hello `, {
+            position: "top-right",
+          })
+        : (removeCookie("token"), navigate("/"));
+    };
+    verifyCookie();
+  }, [cookies, navigate, removeCookie]);
+  const Logout = () => {
+    removeCookie("token");
+    navigate("/signup");
+  };
 
   function onDragEnd(result) {
     if (!result.destination) {
@@ -38,51 +62,46 @@ function App() {
 
   return (
     <>
-      {!login ? <Navigate to="/" /> :
-        <div className="bg-white h-screen w-screen flex justify-center items-center bg-VeryLightGrey ">
-          <div className="absolute top-0 left-0 right-0 z-0 h-2/5 w-full">
-            <img src={desktop_dark_bg} alt="background" />
-          </div>
-
-          <div className="w-2/4 h-full bg-black z-10 bg-transparent mt-10">
-            <Hero />
-            {loading ? (
-              <Loader />
-            ) : (
-              <DragDropContext onDragEnd={onDragEnd}>
-                <Droppable droppableId="droppable">
-                  {(provided, snapshot) => (
-                    <div
-                      className="mt-10 bg-VeryLightGrey  rounded"
-                      {...provided.droppableProps}
-                      ref={provided.innerRef}
-                    >
-                      {data.map((item, index) => (
-                        <Draggable
-                          key={item._id}
-                          draggableId={item._id}
-                          index={index}
-                        >
-                          {(provided, snapshot) => (
-                            <div
-                              ref={provided.innerRef}
-                              {...provided.draggableProps}
-                              {...provided.dragHandleProps}
-                            >
-                              <ListItem item={item} />
-                            </div>
-                          )}
-                        </Draggable>
-                      ))}
-                      {provided.placeholder}
-                    </div>
-                  )}
-                </Droppable>
-              </DragDropContext>
-            )}
-          </div>
+      <div className=" background-image  overflow-hidden">
+        <div className="max-w-6xl bg-transparent   mt-10">
+          <Hero />
+          {loading ? (
+            <Loader />
+          ) : (
+            <DragDropContext onDragEnd={onDragEnd}>
+              <Droppable droppableId="droppable">
+                {(provided, snapshot) => (
+                  <div
+                    className="mt-10 bg-transparent rounded"
+                    {...provided.droppableProps}
+                    ref={provided.innerRef}
+                  >
+                    {data.map((item, index) => (
+                      <Draggable
+                        key={item._id}
+                        draggableId={item._id}
+                        index={index}
+                      >
+                        {(provided, snapshot) => (
+                          <div
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                          >
+                            <ListItem item={item} />
+                          </div>
+                        )}
+                      </Draggable>
+                    ))}
+                    {provided.placeholder}
+                  </div>
+                )}
+              </Droppable>
+            </DragDropContext>
+          )}
         </div>
-      }
+      </div>
+      <ToastContainer />
     </>
   );
 }

@@ -1,38 +1,64 @@
 import React, { useContext, useState } from "react";
-import { NavLink, Navigate } from "react-router-dom";
+import { NavLink, Navigate, useNavigate } from "react-router-dom";
 // import { useHistory } from "react-router";
 import axios from "axios";
 import { AppStateContext } from "./Context";
+import { ToastContainer, toast } from "react-toastify";
 
 function SignIn() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { baseUrl, login, setLogin } = useContext(AppStateContext);
 
-  const hanldeSubmit = () => {
-    console.log("hello from sign in");
-    let url = baseUrl + "/api/users/auth";
-    console.log(email, password);
-    axios.post(url, { email, password }).then((response) => {
-      if (!response.data.message) {
-        setLogin(true);
-        setEmail("");
-        setPassword("");
-
-        // const cookies = response.headers["set-cookie"];
-        // document.cookie = cookies;
-        //go the APP component
-        // const history = useHistory();
-        // history.push("/app");
-      } else {
-        alert("Invalid email or password");
-      }
+  const handleSuccess = (message) => {
+    toast.success(message, {
+      position: "top-center",
+      autoClose: 2000,
     });
+  };
+
+  const handleError = (message) => {
+    toast.error(message, {
+      position: "top-center",
+      autoClose: 2000,
+    });
+  };
+
+  const handleClick = async () => {
+    let url = baseUrl + "/api/users/auth";
+    console.log("i am here");
+    try {
+      const { data } = await axios.post(
+        url,
+        {
+          email: email,
+          password: password,
+        },
+        { withCredentials: true }
+      );
+      console.log("i am here");
+      console.log(data);
+      const { message } = data;
+
+      if (!message) {
+        console.log("i am here");
+        handleSuccess(message);
+        setTimeout(() => {
+          navigate("/app");
+        }, 1000);
+      } else {
+        handleError(message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    setEmail("");
+    setPassword("");
   };
 
   return (
     <>
-      {login ? <Navigate to="/app" /> : null}
       <div className="bg-white p-4 max-w-sm rounded-md shadow-md">
         <p className="text-xl font-semibold text-center text-gray-800 mb-4">
           Sign in to your account
@@ -84,7 +110,7 @@ function SignIn() {
         </div>
         <button
           className="bg-purple-600 text-white rounded-md py-2 px-4 w-full transition duration-300 ease-in-out hover:bg-purple-700"
-          onClick={hanldeSubmit}
+          onClick={handleClick}
         >
           Sign in
         </button>
@@ -95,6 +121,7 @@ function SignIn() {
           </NavLink>
         </p>
       </div>
+      <ToastContainer />
     </>
   );
 }

@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.background-image {
+  background-image: url("./images//bg-desktop-dark.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+@media (max-width: 567px) {
+  .background-image {
+    background-image: url("./images//bg-mobile-dark.jpg");
+  }
+}

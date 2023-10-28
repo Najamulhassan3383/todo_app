@@ -4,13 +4,14 @@ import { NavLink, Navigate, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AppStateContext } from "./Context";
 import { ToastContainer, toast } from "react-toastify";
+import { useCookies } from "react-cookie";
 
 function SignIn() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { baseUrl, login, setLogin } = useContext(AppStateContext);
-  
+  const [cookies, setCookie] = useCookies([]);
 
   const handleSuccess = (message) => {
     toast.success(message, {
@@ -60,7 +61,7 @@ function SignIn() {
 
   return (
     <>
-      <div className="bg-white p-4 max-w-sm rounded-md shadow-md">
+      <div className="bg-white p-4 max-w-sm h-full my-12 m-auto rounded-md shadow-md">
         <p className="text-xl font-semibold text-center text-gray-800 mb-4">
           Sign in to your account
         </p>

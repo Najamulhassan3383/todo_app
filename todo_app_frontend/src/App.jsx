@@ -24,7 +24,7 @@ function App() {
 
   useEffect(() => {
     const verifyCookie = async () => {
-      console.log(cookies);
+      if (!cookies.jwt) return navigate("/");
       const response = await axios.get(
         "http://localhost:3000/api/todos",
 
@@ -39,7 +39,7 @@ function App() {
         ? toast(`Hello `, {
             position: "top-right",
           })
-        : (removeCookie("token"), navigate("/"));
+        : (removeCookie("jwt"), navigate("/"));
     };
     verifyCookie();
   }, [cookies, navigate, removeCookie, setData]);
@@ -56,43 +56,45 @@ function App() {
 
   return (
     <>
-      <div className=" background-image  overflow-hidden">
-        <div className="max-w-6xl bg-transparent   mt-10">
-          <Hero />
-          {loading ? (
-            <Loader />
-          ) : (
-            <DragDropContext onDragEnd={onDragEnd}>
-              <Droppable droppableId="droppable">
-                {(provided, snapshot) => (
-                  <div
-                    className="mt-10 bg-transparent rounded"
-                    {...provided.droppableProps}
-                    ref={provided.innerRef}
-                  >
-                    {data.map((item, index) => (
-                      <Draggable
-                        key={item._id}
-                        draggableId={item._id}
-                        index={index}
-                      >
-                        {(provided, snapshot) => (
-                          <div
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                          >
-                            <ListItem item={item} />
-                          </div>
-                        )}
-                      </Draggable>
-                    ))}
-                    {provided.placeholder}
-                  </div>
-                )}
-              </Droppable>
-            </DragDropContext>
-          )}
+      <div className=" background-image  container overflow-hidden">
+        <div className="container max-w-6xl mx-auto ">
+          <div className="max-w-6xl text-black  mt-10">
+            <Hero />
+            {loading ? (
+              <Loader />
+            ) : (
+              <DragDropContext onDragEnd={onDragEnd}>
+                <Droppable droppableId="droppable">
+                  {(provided, snapshot) => (
+                    <div
+                      className="mt-10 bg-white rounded"
+                      {...provided.droppableProps}
+                      ref={provided.innerRef}
+                    >
+                      {data.map((item, index) => (
+                        <Draggable
+                          key={item._id}
+                          draggableId={item._id}
+                          index={index}
+                        >
+                          {(provided, snapshot) => (
+                            <div
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
+                              {...provided.dragHandleProps}
+                            >
+                              <ListItem item={item} />
+                            </div>
+                          )}
+                        </Draggable>
+                      ))}
+                      {provided.placeholder}
+                    </div>
+                  )}
+                </Droppable>
+              </DragDropContext>
+            )}
+          </div>
         </div>
       </div>
       <ToastContainer />

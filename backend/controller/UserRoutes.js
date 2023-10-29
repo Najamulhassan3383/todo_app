@@ -64,6 +64,15 @@ const registerUser = asyncHandler(async (req, res) => {
 // @route   POST /api/users/logout
 // @access  Public
 
+/**
+ * The function `logoutUser` logs out a user by clearing the JWT cookie and sending a success message.
+ * @param req - The `req` parameter is the request object that contains information about the incoming
+ * HTTP request, such as the request headers, request parameters, and request body. It is typically
+ * provided by the web framework or server handling the request.
+ * @param res - The `res` parameter is the response object that is used to send the response back to
+ * the client. It contains methods and properties that allow you to set the response status, headers,
+ * and body. In this case, it is used to set a cookie and send a JSON response.
+ */
 const logoutUser = (req, res) => {
   res.cookie("jwt", "", {
     httpOnly: true,

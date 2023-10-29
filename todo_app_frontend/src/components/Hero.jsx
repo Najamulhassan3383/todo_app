@@ -5,6 +5,7 @@ import { AppStateContext } from "./Context";
 import Error from "./Error";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 export default function Hero() {
   const { AddTodo, data, setData } = useContext(AppStateContext);
@@ -41,9 +42,17 @@ export default function Hero() {
   };
 
   const handleLogout = async () => {
-    const response = await axios.post("http://localhost:3000/api/auth/logout", {
-      withCredentials: true,
-    });
+    const response = await axios.post(
+      "http://localhost:3000/api/users/logout",
+      {
+        withCredentials: true,
+      }
+    );
+    if (response.status === 200) {
+      // console.log("i am clearning the cookies");
+      // Manually clear cookies using js-cookie library
+      Cookies.remove("jwt");
+    }
     console.log(response);
     setData([]);
     navigate("/");
@@ -68,8 +77,8 @@ export default function Hero() {
         <button
           className="text-white text-sm font-bold"
           onClick={() => {
+            console.log("i am cliced");
             handleLogout();
-            navigate("/");
           }}
         >
           Log out
